@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Skill
 {
+    private const MAX_NAME_LENGTH = 255;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -21,6 +23,11 @@ class Skill
      */
     private $name;
 
+    public function __construct(string $name)
+    {
+        $this->setName($name);
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -31,10 +38,17 @@ class Skill
         return $this->name;
     }
 
-    public function setName(string $name): self
+    private function setName(string $name)
     {
-        $this->name = $name;
+        if (strlen($name) === 0) {
+            throw new \InvalidArgumentException('Name can not be empty.');
+        }
 
-        return $this;
+        if (strlen($name) > static::MAX_NAME_LENGTH) {
+            $message = sprintf('Name is too long, max. %d chars is allowed.', static::MAX_NAME_LENGTH);
+            throw new \InvalidArgumentException($message);
+        }
+
+        $this->name = $name;
     }
 }

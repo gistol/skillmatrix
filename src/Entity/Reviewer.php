@@ -21,6 +21,11 @@ class Reviewer
      */
     private $name;
 
+    public function __construct(string $name)
+    {
+        $this->setName($name);
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -31,10 +36,16 @@ class Reviewer
         return $this->name;
     }
 
-    public function setName(string $name): self
+    private function setName(string $name)
     {
-        $this->name = $name;
+        if (strlen($name) === 0) {
+            throw new \InvalidArgumentException('Name can not be empty.');
+        }
 
-        return $this;
+        if (strlen($name) > 50) {
+            throw new \InvalidArgumentException('Name is too long, max. 50 chars is allowed.');
+        }
+
+        $this->name = $name;
     }
 }

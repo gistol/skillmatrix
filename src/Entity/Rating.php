@@ -43,6 +43,15 @@ class Rating
      */
     private $person;
 
+    public function __construct(Person $person, Reviewer $reviewer, Skill $skill, int $score)
+    {
+        // TODO: add business rules
+        $this->person = $person;
+        $this->reviewer = $reviewer;
+        $this->skill = $skill;
+        $this->setScore($score);
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,22 +98,8 @@ class Rating
         return $this->skill;
     }
 
-    public function setSkill(?Skill $skill): self
-    {
-        $this->skill = $skill;
-
-        return $this;
-    }
-
     public function getPerson(): ?Person
     {
         return $this->person;
-    }
-
-    public function setPerson(?Person $person): self
-    {
-        $this->person = $person;
-
-        return $this;
     }
 }
