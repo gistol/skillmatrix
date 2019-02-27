@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace App\DataFixtures;
 
@@ -12,7 +12,7 @@ use Faker;
 
 class RatingFixtures extends Fixture implements DependentFixtureInterface
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $faker = Faker\Factory::create();
 
@@ -35,11 +35,13 @@ class RatingFixtures extends Fixture implements DependentFixtureInterface
         foreach ($persons as $person) {
             foreach ($skills as $skill) {
                 // Create new Rating with random Reviewer and random score
-                $rating = new Rating($person,$reviewers[rand(0,1)],$skill,rand(0, 3)); // TODO: use Score object
+                $rating = new Rating($person, $reviewers[rand(0, 1)], $skill, rand(0, 3)); // TODO: use Score object
+
                 // Randomly add Note
                 if (rand(0, 1) === 1) {
                     $rating->setNote($faker->text);
                 }
+
                 $manager->persist($rating);
             }
         }
@@ -47,12 +49,12 @@ class RatingFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
     }
 
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             ReviewerFixtures::class,
             PersonFixtures::class,
-            SkillFixtures::class
+            SkillFixtures::class,
         ];
     }
 }

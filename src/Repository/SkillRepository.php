@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Repository;
 
@@ -7,10 +7,10 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method Skill|null find($id, $lockMode = null, $lockVersion = null)
- * @method Skill|null findOneBy(array $criteria, array $orderBy = null)
- * @method Skill[]    findAll()
- * @method Skill[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method \App\Entity\Skill|null find($id, $lockMode = null, $lockVersion = null)
+ * @method \App\Entity\Skill|null findOneBy(array $criteria, array $orderBy = null)
+ * @method \App\Entity\Skill[]    findAll()
+ * @method \App\Entity\Skill[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class SkillRepository extends ServiceEntityRepository
 {

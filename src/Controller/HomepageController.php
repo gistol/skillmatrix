@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -17,12 +17,13 @@ class HomepageController
         $this->personRepository = $personRepository;
     }
 
-    public function index()
+    public function index(): Response
     {
         $persons = $this->personRepository->findAll();
 
         foreach ($persons as $person) {
             $ratings = $person->getRatings();
+
             foreach ($ratings as $rating) {
                 dump($rating);
             }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -13,11 +13,15 @@ class Reviewer
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=50)
+     *
+     * @var string
      */
     private $name;
 
@@ -36,7 +40,7 @@ class Reviewer
         return $this->name;
     }
 
-    private function setName(string $name)
+    private function setName(string $name): void
     {
         if (strlen($name) === 0) {
             throw new \InvalidArgumentException('Name can not be empty.');

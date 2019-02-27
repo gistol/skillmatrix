@@ -1,13 +1,14 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 
 class Skillmatrix
 {
-    /** @var \App\Entity\Person[] */
+    /**
+     * @var \App\Entity\Person[]
+     */
     private $persons;
 
     public function __construct()
@@ -15,7 +16,7 @@ class Skillmatrix
         $this->persons = new ArrayCollection();
     }
 
-    public function addPerson(Person $person)
+    public function addPerson(Person $person): void
     {
         $this->persons->add($person);
     }

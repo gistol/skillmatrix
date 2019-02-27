@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -13,33 +13,45 @@ class Rating
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="smallint")
+     *
+     * @var int
      */
     private $score;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     *
+     * @var string
      */
     private $note;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Reviewer")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @var \App\Entity\Reviewer
      */
     private $reviewer;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Skill")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @var \App\Entity\Skill
      */
     private $skill;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Person", inversedBy="ratings")
+     *
+     * @var \App\Entity\Person
      */
     private $person;
 

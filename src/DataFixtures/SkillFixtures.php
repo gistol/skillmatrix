@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace App\DataFixtures;
 
@@ -8,7 +8,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class SkillFixtures extends Fixture
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         /*
          * TODO: Add more skills: Design patterns & OOP concepts, Framework knowledge

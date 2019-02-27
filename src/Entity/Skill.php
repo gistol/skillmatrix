@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -15,11 +15,15 @@ class Skill
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @var string
      */
     private $name;
 
@@ -38,14 +42,15 @@ class Skill
         return $this->name;
     }
 
-    private function setName(string $name)
+    private function setName(string $name): void
     {
         if (strlen($name) === 0) {
             throw new \InvalidArgumentException('Name can not be empty.');
         }
 
-        if (strlen($name) > static::MAX_NAME_LENGTH) {
-            $message = sprintf('Name is too long, max. %d chars is allowed.', static::MAX_NAME_LENGTH);
+        if (strlen($name) > self::MAX_NAME_LENGTH) {
+            $message = sprintf('Name is too long, max. %d chars is allowed.', self::MAX_NAME_LENGTH);
+
             throw new \InvalidArgumentException($message);
         }
 

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Repository;
 
@@ -7,10 +7,10 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method Reviewer|null find($id, $lockMode = null, $lockVersion = null)
- * @method Reviewer|null findOneBy(array $criteria, array $orderBy = null)
- * @method Reviewer[]    findAll()
- * @method Reviewer[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method \App\Entity\Reviewer|null find($id, $lockMode = null, $lockVersion = null)
+ * @method \App\Entity\Reviewer|null findOneBy(array $criteria, array $orderBy = null)
+ * @method \App\Entity\Reviewer[]    findAll()
+ * @method \App\Entity\Reviewer[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class ReviewerRepository extends ServiceEntityRepository
 {

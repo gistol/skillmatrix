@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -15,16 +15,22 @@ class Person
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=50)
+     *
+     * @var string
      */
     private $name;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Rating", mappedBy="person")
+     *
+     * @var \App\Entity\Rating[]
      */
     private $ratings;
 
@@ -44,7 +50,7 @@ class Person
         return $this->name;
     }
 
-    private function setName(string $name)
+    private function setName(string $name): void
     {
         if (strlen($name) === 0) {
             throw new \InvalidArgumentException('Name can not be empty.');
@@ -58,7 +64,7 @@ class Person
     }
 
     /**
-     * @return Collection|Rating[]
+     * @return \Doctrine\Common\Collections\Collection|\App\Entity\Rating[]
      */
     public function getRatings(): Collection
     {
@@ -79,7 +85,8 @@ class Person
     {
         if ($this->ratings->contains($rating)) {
             $this->ratings->removeElement($rating);
-            // set the owning side to null (unless already changed)
+
+            // Set the owning side to null (unless already changed)
             if ($rating->getPerson() === $this) {
                 $rating->setPerson(null);
             }
