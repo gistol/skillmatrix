@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PersonRepository")
  */
-class Person
+class Person implements \JsonSerializable
 {
     /**
      * @ORM\Id()
@@ -93,5 +93,14 @@ class Person
         }
 
         return $this;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'rating' => $this->getRatings()->getValues(),
+        ];
     }
 }

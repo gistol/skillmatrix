@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SkillRepository")
  */
-class Skill
+class Skill implements \JsonSerializable
 {
     private const MAX_NAME_LENGTH = 255;
 
@@ -55,5 +55,13 @@ class Skill
         }
 
         $this->name = $name;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+        ];
     }
 }
