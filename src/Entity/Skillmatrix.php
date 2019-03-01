@@ -71,6 +71,7 @@ class Skillmatrix implements \JsonSerializable
         /** @var \App\Entity\Person $person */
         foreach ($this->getPersons() as $person) {
             $ratingRow = [];
+
             foreach ($person->getRatings() as $rating) {
                 $ratingRow[] = [
                     'id' => $rating->getId(),

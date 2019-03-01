@@ -71,7 +71,9 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ]
+        ],
+        "cscheck": "./vendor/bin/phpcs",
+        "csfix": "./vendor/bin/phpcbf"
     },
     "conflict": {
         "symfony/symfony": "*"
