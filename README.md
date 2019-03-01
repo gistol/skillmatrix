@@ -30,6 +30,12 @@ This is usefull when Ratings should be edited manually.
 8. Copy phpcs.xml.local to phpcs.xml:  
 `cp phpcs.xml.local phpcs.xml`
 
+9. Install frontend libraries:  
+`yarn install`
+
+10. Build frontend libraries:  
+`yarn dev`
+    
 ## Run Code Standard check  
 
 `./vendor/bin/phpcs -p -s`  
