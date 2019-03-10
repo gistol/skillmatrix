@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\SkillRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Skill\Doctrine")
  */
 class Skill implements \JsonSerializable
 {
@@ -40,6 +40,11 @@ class Skill implements \JsonSerializable
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    public function rename(string $newName): void
+    {
+        $this->setName($newName);
     }
 
     private function setName(string $name): void

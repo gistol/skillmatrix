@@ -1,8 +1,0 @@
-index:
-  path: /
-  controller: App\Controller\HomepageController::index
-
-# Vsetky API routy (s prefixom /api) som si vyhradil pre prehladnost do zvlast suboru routes_api.yml
-api:
-  prefix: /api
-  resource: 'routes_api.yml'

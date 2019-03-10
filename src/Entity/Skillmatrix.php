@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Exceptions\RatingAlreadyExists;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 
 class Skillmatrix implements \JsonSerializable
 {
@@ -17,10 +17,42 @@ class Skillmatrix implements \JsonSerializable
      */
     private $skills;
 
+    /**
+     * @var \App\Entity\Rating[]
+     */
+    private $ratings;
+
     public function __construct()
     {
         $this->persons = new ArrayCollection();
         $this->skills = new ArrayCollection();
+        $this->ratings = new ArrayCollection();
+    }
+
+    /**
+     * @param array $ratings
+     *
+     * @throws \App\Entity\Exceptions\RatingAlreadyExists
+     */
+    public function setRatings(array $ratings): void
+    {
+        /**
+         * Nepouzijem jednoduche priradenie:
+         * $this->ratings = $ratings;
+         * pretoze neviem zarucit, ze v poli $ratings budu iba objekty typu \App\Entity\Rating
+         */
+        foreach ($ratings as $rating) {
+            if (!$rating instanceof Rating) {
+                throw new \InvalidArgumentException(sprintf('Expected instance of %s, got %s', Rating::class, $rating));
+            }
+
+            $this->addRating($rating);
+        }
+    }
+
+    public function getRatings(): ArrayCollection
+    {
+        return $this->ratings;
     }
 
     public function setPersons(array $persons): void
@@ -28,15 +60,18 @@ class Skillmatrix implements \JsonSerializable
         /**
          * Nepouzijem jednoduche:
          * $this->persons = $persons;
-         * pretoze neviem zarucit ze v poli $persons budu iba objekty typu \App\Entity\Person
-         * Funkcia addPerson() ma typehintovany parameter takze vyhodi TypeError pri zlom type parametra
+         * pretoze neviem zarucit, ze v poli $persons budu iba objekty typu \App\Entity\Person
          */
         foreach ($persons as $person) {
+            if (!$person instanceof Person) {
+                throw new \InvalidArgumentException(sprintf('Expected instance of %s, got %s', Person::class, $person));
+            }
+
             $this->addPerson($person);
         }
     }
 
-    public function getPersons(): Collection
+    public function getPersons(): ArrayCollection
     {
         return $this->persons;
     }
@@ -46,17 +81,46 @@ class Skillmatrix implements \JsonSerializable
         /**
          * Nepouzijem jednoduche:
          * $this->skills = $skills;
-         * pretoze neviem zarucit ze v poli $skills budu iba objekty typu \App\Entity\Skill
-         * Funkcia addSkill() ma typehintovany parameter takze vyhodi TypeError pri zlom type parametra
+         * pretoze neviem zarucit, ze v poli $skills budu iba objekty typu \App\Entity\Skill
          */
         foreach ($skills as $skill) {
+            if (!$skill instanceof Skill) {
+                throw new \InvalidArgumentException(sprintf('Expected instance of %s, got %s', Skill::class, $skill));
+            }
+
             $this->addSkill($skill);
         }
     }
 
-    public function getSkills(): Collection
+    public function getSkills(): ArrayCollection
     {
         return $this->skills;
+    }
+
+    /**
+     * @param \App\Entity\Rating $rating
+     *
+     * @throws \App\Entity\Exceptions\RatingAlreadyExists
+     */
+    public function addRating(Rating $rating): void
+    {
+        if ($this->ratingExists($rating)) {
+            throw new RatingAlreadyExists('Rating already exists.');
+        }
+
+        $this->ratings->add($rating);
+    }
+
+    private function ratingExists(Rating $rating): bool
+    {
+        /** @var \App\Entity\Rating $existingRating */
+        foreach ($this->getRatings() as $existingRating) {
+            if ($rating->isEqual($existingRating)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function jsonSerialize(): array

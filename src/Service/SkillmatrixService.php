@@ -2,40 +2,71 @@
 
 namespace App\Service;
 
+use App\DTO\RatingDTO;
+use App\Entity\Exceptions\RatingAlreadyExists;
 use App\Entity\Skillmatrix;
-use App\Repository\PersonRepository;
-use App\Repository\SkillRepository;
+use App\Repository\Person\PersonNotFound;
+use App\Repository\Reviewer\ReviewerNotFound;
+use App\Repository\Skill\SkillNotFound;
+use App\Repository\SkillmatrixRepository;
+use App\Service\Exceptions\RatingNotAdded;
 
 final class SkillmatrixService
 {
     /**
-     * @var \App\Repository\PersonRepository
+     * @var \App\Repository\SkillmatrixRepository
      */
-    private $personRepository;
+    private $skillmatrixRepository;
 
     /**
-     * @var \App\Repository\SkillRepository
+     * @var \App\Service\RatingService
      */
-    private $skillRepository;
+    private $ratingService;
 
-    public function __construct(PersonRepository $personRepository, SkillRepository $skillRepository)
+    public function __construct(SkillmatrixRepository $skillmatrixRepository, RatingService $ratingService)
     {
-        $this->personRepository = $personRepository;
-        $this->skillRepository = $skillRepository;
+        $this->skillmatrixRepository = $skillmatrixRepository;
+        $this->ratingService = $ratingService;
     }
 
+    /**
+     * @return \App\Entity\Skillmatrix
+     *
+     * @throws \App\Repository\Exceptions\InvalidSkillmatrix
+     */
     public function get(): Skillmatrix
     {
-        $skillmatrix = new Skillmatrix();
+        return $this->skillmatrixRepository->get();
+    }
 
-        // Get all Skills
-        $skills = $this->skillRepository->findAll();
-        $skillmatrix->setSkills($skills);
+    /**
+     * @param \App\Entity\Skillmatrix $skillmatrix
+     * @param \App\DTO\RatingDTO $ratingDTO
+     *
+     * @throws \App\Service\Exceptions\RatingNotAdded
+     */
+    public function addRating(Skillmatrix $skillmatrix, RatingDTO $ratingDTO): void
+    {
+        try {
+            $rating = $this->ratingService->create($ratingDTO);
+        } catch (PersonNotFound | ReviewerNotFound | SkillNotFound $e) {
+            throw new RatingNotAdded($e->getMessage());
+        }
 
-        // Get all Persons
-        $persons = $this->personRepository->findAll();
-        $skillmatrix->setPersons($persons);
+        try {
+            $skillmatrix->addRating($rating);
+        } catch (RatingAlreadyExists $e) {
+            throw new RatingNotAdded($e->getMessage());
+        }
 
-        return $skillmatrix;
+        $this->save($skillmatrix);
+    }
+
+    /**
+     * @param \App\Entity\Skillmatrix $skillmatrix
+     */
+    public function save(Skillmatrix $skillmatrix): void
+    {
+        $this->skillmatrixRepository->save($skillmatrix);
     }
 }

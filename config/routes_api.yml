@@ -1,3 +1,0 @@
-skillmatrix:
-  path: /skillmatrix
-  controller: App\Controller\Api\SkillmatrixController::get

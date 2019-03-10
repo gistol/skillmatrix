@@ -3,13 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\PersonRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Person\Doctrine")
  */
-class Person implements \JsonSerializable
+class Person
 {
     /**
      * @ORM\Id()
@@ -17,6 +17,8 @@ class Person implements \JsonSerializable
      * @ORM\Column(type="integer")
      *
      * @var int
+     *
+     * @Groups({"withoutRatings"})
      */
     private $id;
 
@@ -24,11 +26,13 @@ class Person implements \JsonSerializable
      * @ORM\Column(type="string", length=50)
      *
      * @var string
+     *
+     * @Groups({"withoutRatings"})
      */
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Rating", mappedBy="person")
+     * @ORM\OneToMany(targetEntity="App\Entity\Rating", mappedBy="person", cascade={"remove"})
      *
      * @var \App\Entity\Rating[]
      */
@@ -50,6 +54,11 @@ class Person implements \JsonSerializable
         return $this->name;
     }
 
+    public function rename(string $newName): void
+    {
+        $this->setName($newName);
+    }
+
     private function setName(string $name): void
     {
         if (strlen($name) === 0) {
@@ -64,9 +73,9 @@ class Person implements \JsonSerializable
     }
 
     /**
-     * @return \Doctrine\Common\Collections\Collection|\App\Entity\Rating[]
+     * @return \Doctrine\Common\Collections\ArrayCollection
      */
-    public function getRatings(): Collection
+    public function getRatings(): ArrayCollection
     {
         return $this->ratings;
     }
@@ -93,14 +102,5 @@ class Person implements \JsonSerializable
         }
 
         return $this;
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            'id' => $this->getId(),
-            'name' => $this->getName(),
-            'rating' => $this->getRatings()->getValues(),
-        ];
     }
 }

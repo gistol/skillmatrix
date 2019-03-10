@@ -53,17 +53,29 @@
         <properties>
             <property name="linesCountBetweenDifferentAnnotationsTypes" value="1" />
             <property name="annotationsGroups" type="array">
-            			<element value="
-            				@ORM\,
-            			"/>
-            			<element value="
-            				@var,
-            				@param,
-            			"/>
-            			<element value="
-                            @return,
-                        "/>
-            		</property>
+                <element value="
+                    @ORM\,
+                "/>
+                <element value="
+                    @Rest\,
+                "/>
+                <element value="
+                    @Route,
+                "/>
+                <element value="
+                    @ParamConverter,
+                "/>
+                <element value="
+                    @RestView,
+                "/>
+                <element value="
+                    @var,
+                    @param,
+                "/>
+                <element value="
+                    @return,
+                "/>
+            </property>
         </properties>
     </rule>
 
