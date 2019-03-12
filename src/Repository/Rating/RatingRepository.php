@@ -4,6 +4,7 @@ namespace App\Repository\Rating;
 
 use App\Entity\Rating;
 use App\Entity\Skill;
+use Doctrine\Common\Collections\ArrayCollection;
 
 interface RatingRepository
 {
@@ -29,9 +30,9 @@ interface RatingRepository
     public function store(Rating $rating): void;
 
     /**
-     * @param \App\Entity\Rating[] $ratings
+     * @param \App\Entity\Rating[]|\Doctrine\Common\Collections\ArrayCollection $ratings
      */
-    public function updateAll(array $ratings): void;
+    public function updateAll(ArrayCollection $ratings): void;
 
     /**
      * @param \App\Entity\Skill $skill

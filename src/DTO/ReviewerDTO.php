@@ -5,7 +5,7 @@ namespace App\DTO;
 final class ReviewerDTO
 {
     /**
-     * @var int
+     * @var ?int
      */
     private $id;
 

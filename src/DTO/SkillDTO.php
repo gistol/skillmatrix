@@ -5,7 +5,7 @@ namespace App\DTO;
 final class SkillDTO
 {
     /**
-     * @var int
+     * @var ?int
      */
     private $id;
 

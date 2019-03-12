@@ -32,7 +32,9 @@ class RatingFixtures extends Fixture implements DependentFixtureInterface
          */
         $reviewers = [$reviewerTomas, $reviewerAndrej];
 
+        /** @var \App\Entity\Person $person */
         foreach ($persons as $person) {
+            /** @var \App\Entity\Skill $skill */
             foreach ($skills as $skill) {
                 // Create new Rating with random Reviewer and random score
                 $rating = new Rating($person, $reviewers[rand(0, 1)], $skill, rand(0, 3)); // TODO: use Score object

@@ -36,10 +36,27 @@ This is usefull when Ratings should be edited manually.
 10. Build frontend libraries:  
 `yarn dev`
     
-## Run Code Standard check  
+## Code Standard check  
 
+I am using [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) to detects violations of a defined set of coding standards.  
+
+I am using my custom coding standard rules (sniffs) based on [Slevomat Coding Standard](https://github.com/slevomat/coding-standard). Rules are defined in phpcs.xml file.  
+
+Run code standard check:  
 `./vendor/bin/phpcs -p -s`  
 
 Where:  
 -p Display progress  
 -s Display sniff name  
+
+## Static Analysis check
+
+I am using [PHPStan](https://github.com/phpstan/phpstan) to discover bugs in my code without running it.  
+
+Run static analysis:  
+`./vendor/bin/phpstan analyse -l 7 -c phpstan.neon src`
+
+Where:  
+-l Is Level of strictness (0 is the loosest and 7 is the strictest)  
+-c Is config file to use  
+src Is directory to analyse  

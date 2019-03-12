@@ -28,7 +28,7 @@ class Rating implements \JsonSerializable
     /**
      * @ORM\Column(type="text", nullable=true)
      *
-     * @var string
+     * @var ?string
      */
     private $note;
 
@@ -98,19 +98,19 @@ class Rating implements \JsonSerializable
         return $this->reviewer;
     }
 
-    public function setReviewer(?Reviewer $reviewer): self
+    public function setReviewer(Reviewer $reviewer): self
     {
         $this->reviewer = $reviewer;
 
         return $this;
     }
 
-    public function getSkill(): ?Skill
+    public function getSkill(): Skill
     {
         return $this->skill;
     }
 
-    public function getPerson(): ?Person
+    public function getPerson(): Person
     {
         return $this->person;
     }

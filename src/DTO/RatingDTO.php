@@ -5,7 +5,7 @@ namespace App\DTO;
 final class RatingDTO
 {
     /**
-     * @var int
+     * @var ?int
      */
     private $id;
 
@@ -15,7 +15,7 @@ final class RatingDTO
     private $score;
 
     /**
-     * @var string
+     * @var ?string
      */
     private $note;
 
@@ -54,7 +54,7 @@ final class RatingDTO
         return $this->score;
     }
 
-    public function getNote(): string
+    public function getNote(): ?string
     {
         return $this->note;
     }

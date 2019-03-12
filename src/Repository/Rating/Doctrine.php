@@ -5,6 +5,7 @@ namespace App\Repository\Rating;
 use App\Entity\Rating;
 use App\Entity\Skill;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -50,7 +51,7 @@ class Doctrine extends ServiceEntityRepository implements RatingRepository
         }
     }
 
-    public function updateAll(array $ratings): void
+    public function updateAll(ArrayCollection $ratings): void
     {
         /**
          * Update bezi v dvoch krokoch v transakcii:

@@ -34,7 +34,7 @@ class Person
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Rating", mappedBy="person", cascade={"remove"})
      *
-     * @var \App\Entity\Rating[]
+     * @var \App\Entity\Rating[]|\Doctrine\Common\Collections\ArrayCollection
      */
     private $ratings;
 
@@ -78,29 +78,5 @@ class Person
     public function getRatings(): ArrayCollection
     {
         return $this->ratings;
-    }
-
-    public function addRating(Rating $rating): self
-    {
-        if (!$this->ratings->contains($rating)) {
-            $this->ratings[] = $rating;
-            $rating->setPerson($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRating(Rating $rating): self
-    {
-        if ($this->ratings->contains($rating)) {
-            $this->ratings->removeElement($rating);
-
-            // Set the owning side to null (unless already changed)
-            if ($rating->getPerson() === $this) {
-                $rating->setPerson(null);
-            }
-        }
-
-        return $this;
     }
 }

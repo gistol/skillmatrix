@@ -8,17 +8,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Skillmatrix implements \JsonSerializable
 {
     /**
-     * @var \App\Entity\Person[]
+     * @var \App\Entity\Person[]|\Doctrine\Common\Collections\ArrayCollection
      */
     private $persons;
 
     /**
-     * @var \App\Entity\Skill[]
+     * @var \App\Entity\Skill[]|\Doctrine\Common\Collections\ArrayCollection
      */
     private $skills;
 
     /**
-     * @var \App\Entity\Rating[]
+     * @var \App\Entity\Rating[]|\Doctrine\Common\Collections\ArrayCollection
      */
     private $ratings;
 
